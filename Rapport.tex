@@ -42,6 +42,63 @@
 \Large{Erkin Tunc BOYA}
 \end{center}
 
+\section{Ex1}
+Il y a 2 joueurs A et B .Chacun possede 3 jetons : un rouge, un blanc et un bleu. C'est un jeu de 2 jouers, Jeux à somme nulle. Pour commencer les joueurs sélectionnent chacun un de leur jeton et les exhibent simultanément. Ils d´eterminent alors leur
+gain
+
+ 
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        \textbf{Lien entre couleurs} & \textbf{gain} \\ \hline
+        rouge bat blanc              & 50		\\ 
+        blanc bat bleu               & 40		\\ 
+        bleu bat rouge               & 30		\\ 
+        \text{même couleur}          & 0		\\ \hline
+    \end{tabular}
+\end{table}
+
+
+\subsection{Modeliastion de Jeu}
+\[
+\begin{array}{c|cccccc}
+      & 1 & 2 & 3 & 4 & 5 & 6 \\
+\hline
+1 &  0   &  0   &   0   &  120  & -120 &   0   \\
+2 &  0   &  0   &  120  &   0   &   0  & -120  \\
+3 &  0   & -120 &   0   &   0   &   0  &  120  \\
+4 & -120 &  0   &   0   &   0   &  120 &   0   \\
+5 &  120 &  0   &   0   & -120  &   0  &   0   \\
+6 &  0   & 120  & -120  &   0   &   0  &   0
+\end{array}
+\]
+
+\subsubsection{Les straregies}
+\noindent 1 = (\text{rouge}, \text{blanc}, \text{bleu})\\
+2 = (\text{rouge}, \text{bleu}, \text{blanc})\\
+3 = (\text{blanc}, \text{rouge}, \text{bleu})\\
+4 = (\text{blanc}, \text{bleu}, \text{rouge})\\
+5 = (\text{bleu}, \text{rouge}, \text{blanc})\\
+6 = (\text{bleu}, \text{blanc}, \text{rouge})\\
+
+
+\section{Ex2}
+
+\subsection{Modelisation}
+\[
+A =
+\begin{pmatrix}
+-1 &  1 &  1 & -1 &  1 &  1 \\
+ 1 &  1 & -1 &  1 &  1 & -1 \\
+ 1 & -1 &  1 &  1 &  1 &  1 \\
+ 1 & -1 & -1 &  1 &  1 &  1 \\
+-1 & -1 &  1 &  1 &  1 &  1 \\
+ 1 &  1 &  1 &  1 & -1 & -1 \\
+ 1 &  1 &  1 & -1 & -1 &  1
+\end{pmatrix}
+\]
 
 
 
