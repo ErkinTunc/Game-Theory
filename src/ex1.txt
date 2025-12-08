@@ -1,0 +1,67 @@
+
+  OPL 22.1.1.0 Model
+  Author lmamroune
+  Creation Date 5 déc. 2025 at 165011
+ 
+int N = 6;  Matrice avec 6 lignes et 6 colonnes 
+range I = 1..N; 
+
+ 2jouers, Jeux à somme nulle
+ Stategies de jouer les 3 couleurs rouge,blanc,bleue
+
+ 1=(rouge,blanc,bleu)
+ 2=(rouge,bleu,blanc)
+ 3=(blanc,rouge,bleu)
+ 4=(blanc,bleu,rouge)
+ 5=(bleu,rouge,blanc)
+ 6=(bleu,blanc,rouge)
+
+ Issues (dans l'exercie')
+ rouge bat blac = +50
+ blac bat bleu = +50
+ bleu bat rouge = +50
+ même couleur = 0
+
+
+ Matrice de jeux (66)  
+
+
+dvar float+ x[I];  Variables reelles non negatives
+dvar float+ y[I];  Variables reelles non negatives
+
+dvar float g;
+
+ Une variable reel sans restriction de signe
+maximize g;  maximizer le gain 
+
+ Fonction objective
+subject to
+ 7 Contraintes
+
+{
+c1 g - (0x[1] + 0x[2] + 0x[3]-120x[4] + 120x[5] + 0x[6]) = 0;
+c2 g - (0x[1] + 0x[2] - 120x[3] +0x[4] + 0x[5] + 120x[6]) = 0;
+c3 g - (0x[1] + 120x[2] + 0x[3] +0x[4] + 0x[5] + -120x[6]) = 0;
+c4 g - (120x[1] + 0x[2] + 0x[3] -0x[4] - 120x[5] + 0x[6]) = 0;
+c5 g - (-120x[1] + 0x[2] + 0x[3] +120x[4] +0x[5] + 0x[6]) = 0;
+c6 g - (0x[1] -120x[2] + 120x[3] +0x[4] + 0x[5] + 0x[6]) = 0;
+c7 sum(i in I) x[i] == 1;
+
+}
+
+
+ Il n'ya pas de point selle V- != V+
+
+execute
+ Affichage de la solution
+{
+writeln(nValeur optimale , g) ;
+writeln(nSolution  );
+for (var i in I)
+{
+if (Opl.abs(x[i]) = 0.000001)  On affiche les variables non nulles.
+{
+writeln(x[,i,]=,x[i]);
+}
+}
+}

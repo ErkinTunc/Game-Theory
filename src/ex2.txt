@@ -1,0 +1,54 @@
+/*********************************************
+ * OPL 22.1.1.0 Model
+ * Author: etboya
+ * Creation Date: 8 déc. 2025 at 08:02:41
+ *********************************************/
+
+ // c'est un jeu somme nulle donc soit X soit Y'
+ 
+int N = 7; // Matrice avec 7 lignes  
+range I = 1..N; // 6 colonnes 
+
+// Matrice de jeux (6*6)  
+
+
+dvar float+ x[I]; // Variables reelles non negatives
+dvar float+ y[I]; // Variables reelles non negatives
+
+dvar float g;
+
+// Une variable reel sans restriction de signe
+maximize g; // maximizer le gain 
+
+// Fonction objective
+subject to
+// 7 Contraintes
+
+{
+c1: g - (-1*x[1] + 1*x[2] + 1*x[3] - 1*x[4] + 1*x[5] + 1*x[6]) <= 0;
+c2: g - ( 1*x[1] + 1*x[2] - 1*x[3] + 1*x[4] + 1*x[5] - 1*x[6]) <= 0;
+c3: g - ( 1*x[1] - 1*x[2] + 1*x[3] + 1*x[4] + 1*x[5] + 1*x[6]) <= 0;
+c4: g - ( 1*x[1] - 1*x[2] - 1*x[3] + 1*x[4] + 1*x[5] + 1*x[6]) <= 0;
+c5: g - (-1*x[1] - 1*x[2] + 1*x[3] + 1*x[4] + 1*x[5] + 1*x[6]) <= 0;
+c6: g - ( 1*x[1] + 1*x[2] + 1*x[3] + 1*x[4] - 1*x[5] - 1*x[6]) <= 0;
+c7: g - ( 1*x[1] + 1*x[2] + 1*x[3] - 1*x[4] - 1*x[5] + 1*x[6]) <= 0;
+c8:sum(i in I) x[i] == 1;
+
+}
+
+
+// Il n'ya pas de point selle V- != V+
+
+execute
+// Affichage de la solution
+{
+writeln("\nValeur optimale :", g) ;
+writeln("\nSolution : ");
+for (var i in I)
+{
+if (Opl.abs(x[i]) >= 0.000001) // On affiche les variables non nulles.
+{
+writeln("x[",i,"]=",x[i]);
+}
+}
+}
