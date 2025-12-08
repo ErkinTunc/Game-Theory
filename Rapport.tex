@@ -43,29 +43,41 @@
 \end{center}
 
 \section{Ex1}
-Il y a 2 joueurs A et B .Chacun possede 3 jetons : un rouge, un blanc et un bleu. C'est un jeu de 2 jouers, Jeux à somme nulle. Pour commencer les joueurs sélectionnent chacun un de leur jeton et les exhibent simultanément. Ils d´eterminent alors leur
-gain
-
- 
+Il y a deux joueurs $A$ et $B$. Chacun possède trois jetons : un rouge, un blanc et un bleu. 
+C'est un jeu à deux joueurs, à somme nulle (si la valeur est $> 0$, c'est un gain pour $A$ et une perte pour $B$). 
+Pour commencer, les joueurs sélectionnent chacun un de leurs jetons et les exhibent simultanément. 
+Ils déterminent alors leur gain :
 
 \begin{table}[h!]
     \centering
     \begin{tabular}{|c|c|}
         \hline
         \textbf{Lien entre couleurs} & \textbf{gain} \\ \hline
-        rouge bat blanc              & 50		\\ 
-        blanc bat bleu               & 40		\\ 
-        bleu bat rouge               & 30		\\ 
-        \text{même couleur}          & 0		\\ \hline
+        rouge bat blanc              & 50  \\ 
+        blanc bat bleu               & 40  \\ 
+        bleu bat rouge               & 30  \\ 
+        \text{même couleur}          & 0   \\ \hline
     \end{tabular}
 \end{table}
 
 
-\subsection{Modeliastion de Jeu}
+\subsection{Modélisation du jeu}
+
+On considère les stratégies pures suivantes pour chaque joueur (ordre dans lequel il utilise ses jetons) :
+
+\subsubsection{Les stratégies}
+\noindent
+1 = (\text{rouge}, \text{blanc}, \text{bleu})\\
+2 = (\text{rouge}, \text{bleu}, \text{blanc})\\
+3 = (\text{blanc}, \text{rouge}, \text{bleu})\\
+4 = (\text{blanc}, \text{bleu}, \text{rouge})\\
+5 = (\text{bleu}, \text{rouge}, \text{blanc})\\
+6 = (\text{bleu}, \text{blanc}, \text{rouge})\\[0.3cm]
+
+La matrice de gains (pour le joueur $A$) est alors :
 \[
 \begin{array}{c|cccccc}
-      & 1 & 2 & 3 & 4 & 5 & 6 \\
-\hline
+      & 1 & 2 & 3 & 4 & 5 & 6 \\ \hline
 1 &  0   &  0   &   0   &  120  & -120 &   0   \\
 2 &  0   &  0   &  120  &   0   &   0  & -120  \\
 3 &  0   & -120 &   0   &   0   &   0  &  120  \\
@@ -75,14 +87,81 @@ gain
 \end{array}
 \]
 
-\subsubsection{Les straregies}
-\noindent 1 = (\text{rouge}, \text{blanc}, \text{bleu})\\
-2 = (\text{rouge}, \text{bleu}, \text{blanc})\\
-3 = (\text{blanc}, \text{rouge}, \text{bleu})\\
-4 = (\text{blanc}, \text{bleu}, \text{rouge})\\
-5 = (\text{bleu}, \text{rouge}, \text{blanc})\\
-6 = (\text{bleu}, \text{blanc}, \text{rouge})\\
 
+\subsection{Stratégie pure}
+
+On calcule d'abord les bornes classiques :
+\[
+V^- = \max_i \min_j a_{ij}, 
+\qquad 
+V^+ = \min_j \max_i a_{ij}.
+\]
+
+Comme tous les minima des lignes valent $-120$, on obtient :
+\[
+V^- = \max(-120,-120,-120,-120,-120,-120) = -120.
+\]
+
+Comme tous les maxima des colonnes valent $120$, on obtient :
+\[
+V^+ = \min(120,120,120,120,120,120) = 120.
+\]
+
+Ainsi,
+\[
+V^- \neq V^+ \qquad \Longrightarrow \qquad 
+\text{pas de point selle et pas de solution en stratégies pures.}
+\]
+
+\subsection{Stratégies mixtes}
+
+Une stratégie mixte est un vecteur de probabilités.
+
+Pour le joueur~A :
+\[
+X = (x_1, \ldots, x_6), \qquad 
+x_i \ge 0 \ \text{pour tout } i = 1,\ldots,6, \qquad
+\sum_{i=1}^{6} x_i = 1.
+\]
+
+Pour le joueur~B :
+\[
+Y = (y_1, \ldots, y_6), \qquad
+y_j \ge 0 \ \text{pour tout } j = 1,\ldots,6, \qquad
+\sum_{j=1}^{6} y_j = 1.
+\]
+
+\bigskip
+
+Dans notre modélisation, il n'existe pas de point selle puisque
+\[
+V^- \neq V^+.
+\]
+
+Nous cherchons donc des stratégies mixtes \(X^*\) et \(Y^*\)
+telles que l'espérance de gain du joueur~A soit maximisée et celle de B minimisée.
+
+\medskip
+
+Le système d'inégalités correspondant est :
+\[ E(X,Y)
+\begin{cases}
+y_1(-120\,x_4 + 120\,x_5 ) \ge g, \\
+y_2(-120\,x_3 + 120\,x_6 ) \ge g, \\
+y_3( 120\,x_2 - 120\,x_6 ) \ge g, \\
+y_4( 120\,x_1 - 120\,x_5 ) \ge g, \\
+y_5(-120\,x_1 + 120\,x_4 ) \ge g, \\
+y_6(-120\,x_2 + 120\,x_3 ) \ge g. \\
+x_1 + x_2 + x_3 + x_4 + x_5 + x_6 = 1
+\end{cases}
+\]
+
+% je vais mettre le reponce de code qu'on a ecrit
+
+
+
+
+%------------------------------------------------------
 
 \section{Ex2}
 

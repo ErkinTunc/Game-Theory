@@ -2,6 +2,7 @@
 
 
 def Stategy_Pures(A): # A est le matrice des gains du joueur I | A_ij
+    """Détermine si le jeu admet une valeur en stratégies pures et retourne cette valeur si elle existe."""
     strategies_I = len(A)       # i
     strategies_II = len(A[0])   # j   
     
@@ -22,3 +23,7 @@ def Stategy_Pures(A): # A est le matrice des gains du joueur I | A_ij
     
 if __name__ == "__main__":
     print("Exemple 1:")
+    A1 = [[1, -2, 3],
+          [-1, 4, 5],
+          [2, 1, 6]]
+    Stategy_Pures(A1)
