@@ -143,29 +143,58 @@ telles que l'espérance de gain du joueur~A soit maximisée et celle de B minimi
 
 \medskip
 
-Le système d'inégalités correspondant est :
-\[ E(X,Y)
+\paragraph{Programme du joueur~A (maximiseur, en ligne).}
+On cherche une stratégie mixte 
+\(
+X = (x_1,\ldots,x_6)
+\)
+et une valeur \(g\) telles que, pour chaque stratégie pure \(j\) de B,
+\[
+E(X,j) = \sum_{i=1}^{6} a_{ij} x_i \;\ge\; g.
+\]
+
+Le système d'inégalités correspondant, pour notre matrice de jeu, est :
+\[
 \begin{cases}
-y_1(-120\,x_4 + 120\,x_5 ) \ge g, \\
-y_2(-120\,x_3 + 120\,x_6 ) \ge g, \\
-y_3( 120\,x_2 - 120\,x_6 ) \ge g, \\
-y_4( 120\,x_1 - 120\,x_5 ) \ge g, \\
-y_5(-120\,x_1 + 120\,x_4 ) \ge g, \\
-y_6(-120\,x_2 + 120\,x_3 ) \ge g. \\
-x_1 + x_2 + x_3 + x_4 + x_5 + x_6 = 1
+-120\,x_4 + 120\,x_5 \ge g, \\[0.2em]
+-120\,x_3 + 120\,x_6 \ge g, \\[0.2em]
+120\,x_2 - 120\,x_6 \ge g, \\[0.2em]
+120\,x_1 - 120\,x_5 \ge g, \\[0.2em]
+-120\,x_1 + 120\,x_4 \ge g, \\[0.2em]
+-120\,x_2 + 120\,x_3 \ge g, \\[0.4em]
+x_1 + x_2 + x_3 + x_4 + x_5 + x_6 = 1, \\[0.2em]
+x_i \ge 0,\quad i = 1,\ldots,6.
 \end{cases}
 \]
 
-% je vais mettre le reponce de code qu'on a ecrit
+L'objectif du joueur~A est de
+\[
+\max g
+\]
+sous ces contraintes.
 
 
 
 
 %------------------------------------------------------
 
-\section{Ex2}
+\section{Ex2 Jeu de Domino}
+Le joueur X choisit une configuration et le joueur Y propose (simultanément) une case parmi les 6. 
+
+Si la configuration recouvre cette case Y gagne sinon X gagne. 
+
+C'est un jeu somme nulle (si la valeur est $> 0$, c'est un gain pour $X$ et une perte pour $Y$) docn si Jouur X gagne +1 point joeur Y perdre -1 point. Le somme de points gagnent et points de perdre est toujours pareils.
+
 
 \subsection{Modelisation}
+Il y a 7 strategies different pour X donc il y a 7 ligne.
+
+Le premier 3 collone represante 1ier ligne de jeu.
+Le dernier 3 collone represante 2ieme ligne de jeu
+
+Les cases cohisi par le X ont une valuer 1.
+
+
 \[
 A =
 \begin{pmatrix}
@@ -179,6 +208,29 @@ A =
 \end{pmatrix}
 \]
 
+\subsection{Stratégie pure}
 
+On calcule d'abord les bornes classiques :
+\[
+V^- = \max_i \min_j a_{ij}, 
+\qquad 
+V^+ = \min_j \max_i a_{ij}.
+\]
+
+Comme tous les minima des lignes valent $-1$, on obtient :
+\[
+V^- = \max(-1,-1,-1,-1,-1,-1) = -1.
+\]
+
+Comme tous les maxima des colonnes valent $1$, on obtient :
+\[
+V^+ = \min(1,1,1,1,1,1) = 1.
+\]
+
+Ainsi,
+\[
+V^- \neq V^+ \qquad \Longrightarrow \qquad 
+\text{pas de point selle et pas de solution en stratégies pures.}
+\]
 
 \end{document}
