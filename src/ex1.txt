@@ -14,13 +14,19 @@ range I = 1..N; // indices des stratégies de A
 dvar float+ x[I];  // probabilités x[i] >= 0
 dvar float+ y[I];  // probabilités y[i] >= 0
 
-// Fonction objectif : maximiser le gain garanti
+// Fonction objectif pour le joueur A : maximiser le gain garanti
 dvar float g; // valeur garantie (peut être négative)
+
+// Fonction objectif pour le joueur B : minimiser le gain garanti
+dvar float h; // valeur garantie (peut être négative)
 
 // Fonction objectif : maximiser le gain garanti
 maximize g;  
 
-// Fonction objective
+// Fonction objective : minimiser le gain garanti
+maximize h;
+
+// Fonction objective 
 subject to {
     // 6 contraintes de type : g <= somme des gains contre chaque stratégie pure de B
 
@@ -35,17 +41,43 @@ subject to {
     c7: sum(i in I) x[i] == 1;
 }
 
-  // Il n'ya pas de point selle V- != V+
+// Fonction objective for le joueur B
+subject to {
+    // 6 contraintes de type : g <= somme des gains contre chaque stratégie pure de B
+
+    c1: h - (   0*y[1] +   0*y[2] +   0*y[3] + 120*y[4] - 120*y[5] +   0*y[6]) <= 0;
+    c2: h - (   0*y[1] +   0*y[2] + 120*y[3] +   0*y[4] +   0*y[5] - 120*y[6]) <= 0;
+    c3: h - (   0*y[1] - 120*y[2] +   0*y[3] +   0*y[4] +   0*y[5] + 120*y[6]) <= 0;
+    c4: h - (-120*y[1] +   0*y[2] +   0*y[3] +   0*y[4] + 120*y[5] +   0*y[6]) <= 0;
+    c5: h - (+120*y[1] +   0*y[2] +   0*y[3] - 120*y[4] +   0*y[5] +   0*y[6]) <= 0;
+    c6: h - (   0*y[1] + 120*y[2] - 120*y[3] +   0*y[4] +   0*y[5] +   0*y[6]) <= 0;
+    
+    // Somme des probabilités
+    c7: sum(i in I) y[i] == 1;
+}
+
+
+// Il n'ya pas de point selle V- != V+
 
 execute // Affichage de la solution
 {
-  writeln("\nValeur optimale :", g) ;
+  writeln("\nValeur optimale pour A :", g) ;
   writeln("\nSolution : ");
   for (var i in I)
   {
     if (Opl.abs(x[i]) >= 0.000001) // On affiche les variables non nulles.
     {
       writeln("x[",i,"]=",x[i]);
+    }
+  }
+  writeln("--------------------------------");
+  writeln("\nValeur optimale pour B :", h) ;
+  writeln("\nSolution : ");
+  for (var i in I)
+  {
+    if (Opl.abs(y[i]) >= 0.000001) // On affiche les variables non nulles.
+    {
+      writeln("y[",i,"]=",y[i]);
     }
   }
 }

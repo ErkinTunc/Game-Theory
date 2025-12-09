@@ -44,9 +44,11 @@
 
 \section{Ex1}
 Il y a deux joueurs $A$ et $B$. Chacun possède trois jetons : un rouge, un blanc et un bleu. 
-C'est un jeu à deux joueurs, à somme nulle (si la valeur est $> 0$, c'est un gain pour $A$ et une perte pour $B$). 
-Pour commencer, les joueurs sélectionnent chacun un de leurs jetons et les exhibent simultanément. 
+C'est un jeu à deux joueurs, à somme nulle : si la valeur est $> 0$, c'est un gain pour $A$ et une perte du même montant pour $B$, et réciproquement. Pour chaque issue, la somme des gains des deux joueurs est donc toujours égale à $0$. 
+Pour commencer, les joueurs sélectionnent chacun un de leurs jetons et les exhibent simultanément. \\
+ 
 Ils déterminent alors leur gain :
+
 
 \begin{table}[h!]
     \centering
@@ -74,6 +76,7 @@ On considère les stratégies pures suivantes pour chaque joueur (ordre dans leq
 5 = (\text{bleu}, \text{rouge}, \text{blanc})\\
 6 = (\text{bleu}, \text{blanc}, \text{rouge})\\[0.3cm]
 
+
 La matrice de gains (pour le joueur $A$) est alors :
 \[
 \begin{array}{c|cccccc}
@@ -87,6 +90,25 @@ La matrice de gains (pour le joueur $A$) est alors :
 \end{array}
 \]
 
+\bigskip
+
+Exemple : case \(i = 1\), \(j = 4\).
+
+La stratégie \(1\) du joueur~A est \((\text{rouge}, \text{blanc}, \text{bleu})\),  
+la stratégie \(4\) du joueur~B est \((\text{blanc}, \text{bleu}, \text{rouge})\).
+
+\begin{itemize}
+    \item Coup 1 : rouge (A) contre blanc (B) → rouge bat blanc → \(+50\).
+    \item Coup 2 : blanc (A) contre bleu (B) → blanc bat bleu → \(+40\).
+    \item Coup 3 : bleu (A) contre rouge (B) → bleu bat rouge → \(+30\).
+\end{itemize}
+
+Ainsi, le gain total du joueur~A est
+\[
+50 + 40 + 30 = 120,
+\]
+d’où \(a_{1,4} = 120\).
+
 
 \subsection{Stratégie pure}
 
@@ -97,14 +119,22 @@ V^- = \max_i \min_j a_{ij},
 V^+ = \min_j \max_i a_{ij}.
 \]
 
-Comme tous les minima des lignes valent $-120$, on obtient :
+Pour chaque stratégie pure $i$ de $A$, le joueur $B$ peut toujours choisir une colonne qui donne à $A$ une perte de $-120$. Ainsi, pour chaque ligne $i$, on a 
 \[
-V^- = \max(-120,-120,-120,-120,-120,-120) = -120.
+\min_j a_{ij} = -120.
+\]
+On en déduit :
+\[
+V^- = \max_i \min_j a_{ij} = -120.
 \]
 
-Comme tous les maxima des colonnes valent $120$, on obtient :
+De même, pour chaque stratégie pure $j$ de $B$, le joueur $A$ peut choisir une ligne qui lui garantit un gain de $120$. Par conséquent,
 \[
-V^+ = \min(120,120,120,120,120,120) = 120.
+\max_i a_{ij} = 120 \quad \text{pour chaque colonne } j.
+\]
+D'où :
+\[
+V^+ = \min_j \max_i a_{ij} = 120.
 \]
 
 Ainsi,
@@ -112,6 +142,7 @@ Ainsi,
 V^- \neq V^+ \qquad \Longrightarrow \qquad 
 \text{pas de point selle et pas de solution en stratégies pures.}
 \]
+
 
 \subsection{Stratégies mixtes}
 
@@ -145,15 +176,18 @@ telles que l'espérance de gain du joueur~A soit maximisée et celle de B minimi
 
 \paragraph{Programme du joueur~A (maximiseur, en ligne).}
 On cherche une stratégie mixte 
-\(
-X = (x_1,\ldots,x_6)
-\)
-et une valeur \(g\) telles que, pour chaque stratégie pure \(j\) de B,
 \[
-E(X,j) = \sum_{i=1}^{6} a_{ij} x_i \;\ge\; g.
+X = (x_1,\ldots,x_6)
+\]
+et une valeur garantie \(g\). Pour que \(X\) soit acceptable pour le joueur~A, il faut que,
+contre chaque stratégie pure \(j\) du joueur~B, l’espérance de gain de \(A\) soit au moins égale
+à \(g\) :
+\[
+E(X,j) = \sum_{i=1}^{6} a_{ij} x_i \ge g.
 \]
 
-Le système d'inégalités correspondant, pour notre matrice de jeu, est :
+En utilisant successivement les colonnes de la matrice de gains, on obtient les six contraintes
+suivantes :
 \[
 \begin{cases}
 -120\,x_4 + 120\,x_5 \ge g, \\[0.2em]
@@ -163,38 +197,177 @@ Le système d'inégalités correspondant, pour notre matrice de jeu, est :
 -120\,x_1 + 120\,x_4 \ge g, \\[0.2em]
 -120\,x_2 + 120\,x_3 \ge g, \\[0.4em]
 x_1 + x_2 + x_3 + x_4 + x_5 + x_6 = 1, \\[0.2em]
-x_i \ge 0,\quad i = 1,\ldots,6.
+x_i \ge 0,\quad i=1,\ldots,6.
 \end{cases}
 \]
 
-L'objectif du joueur~A est de
+L’objectif du joueur~A est
 \[
 \max g
 \]
 sous ces contraintes.
 
+\medskip
 
+La résolution (par exemple via OPL) donne :
+\[
+g^{*} = 0,
+\qquad
+x_1^{*} = x_4^{*} = x_5^{*} = \frac{1}{3},
+\qquad
+x_2^{*} = x_3^{*} = x_6^{*} = 0.
+\]
+
+Ainsi, la stratégie optimale du joueur~A est
+\[
+x^{*} = \left( 
+\frac{1}{3},\;
+0,\;
+0,\;
+\frac{1}{3},\;
+\frac{1}{3},\;
+0
+\right)^{T},
+\qquad
+v = g^{*} = 0.
+\]
+
+\paragraph{Vérification.}
+Pour cette stratégie \(X^{*}\), on vérifie que, pour chaque colonne \(j\),
+\[
+E(X^{*},j)=0=g^{*}.
+\]
+Chaque contrainte est donc satisfaite ou saturée, ce qui confirme que \(X^{*}\) est optimale.
+
+
+\paragraph{Programme du joueur~B (minimiseur, en colonne).}
+Le joueur~B cherche une stratégie mixte 
+\[
+Y = (y_1,\ldots,y_6)
+\]
+et une valeur \(h\) telles que, pour chaque stratégie pure \(i\) de \(A\),
+l’espérance de gain de \(A\) ne dépasse pas \(h\) :
+\[
+E(i,Y) = \sum_{j=1}^{6} a_{ij} y_j \le h.
+\]
+
+En utilisant les lignes de la matrice de gains, on obtient les six contraintes :
+\[
+\begin{cases}
+120\,y_4 - 120\,y_5 \le h,\\[0.2em]
+120\,y_3 - 120\,y_6 \le h,\\[0.2em]
+-120\,y_2 + 120\,y_6 \le h,\\[0.2em]
+-120\,y_1 + 120\,y_5 \le h,\\[0.2em]
+120\,y_1 - 120\,y_4 \le h,\\[0.2em]
+120\,y_2 - 120\,y_3 \le h,\\[0.4em]
+y_1 + y_2 + y_3 + y_4 + y_5 + y_6 = 1,\\[0.2em]
+y_j \ge 0,\quad j=1,\ldots,6.
+\end{cases}
+\]
+
+L’objectif du joueur~B est :
+\[
+\min h.
+\]
+
+\medskip
+
+En résolvant ce programme linéaire, on obtient :
+\[
+h^{*}=0.
+\]
+
+Une solution optimale pour le joueur~B est :
+\[
+y^{*}_{1}=y^{*}_{4}=y^{*}_{5}=\frac{1}{3},
+\qquad
+y^{*}_{2}=y^{*}_{3}=y^{*}_{6}=0.
+\]
+
+\paragraph{Justification.}
+On vérifie que, pour chaque ligne \(i\),
+\[
+E(i,Y^{*}) = 0 = h^{*}.
+\]
+Toutes les contraintes sont satisfaites ou saturées, ce qui confirme que \(Y^{*}\) est optimale.
+De plus, la matrice du jeu est antisymétrique (chaque gain non nul apparaît avec son opposé),
+ce qui explique que les stratégies optimales de \(A\) et \(B\) coïncident.
+
+
+\paragraph{Question (c).}
+Dans l’énoncé, on suppose que le joueur maximisateur utilise aussi souvent les trois
+combinaisons suivantes :
+\begin{itemize}
+    \item[(i)] Bleu – Rouge – Blanc,
+    \item[(ii)] Blanc – Bleu – Rouge,
+    \item[(iii)] Rouge – Blanc – Bleu.
+\end{itemize}
+
+Dans notre numérotation des stratégies pures, ces combinaisons correspondent
+respectivement aux stratégies \(5\), \(4\) et \(1\).
+Ainsi, jouer chacune de ces trois stratégies avec probabilité \(1/3\) revient à jouer
+la stratégie mixte :
+\[
+X = \left( \frac{1}{3},\, 0,\, 0,\, \frac{1}{3},\, \frac{1}{3},\, 0 \right).
+\]
+
+Or, cette stratégie est exactement la solution optimale obtenue dans le programme
+linéaire du joueur~A :
+\[
+x^{*}_1 = x^{*}_4 = x^{*}_5 = \frac{1}{3}, 
+\qquad
+x^{*}_2 = x^{*}_3 = x^{*}_6 = 0.
+\]
+
+De plus, pour cette stratégie, l’espérance de gain contre chacune des stratégies pures
+du joueur~B vaut :
+\[
+E(X,j) = 0, \qquad \forall j=1,\ldots,6.
+\]
+C’est donc bien la meilleure valeur que le joueur~A peut garantir, c’est-à-dire
+\[
+v = 0.
+\]
+
+Ainsi, le fait de jouer les trois combinaisons proposées avec la même fréquence assure
+au joueur~A un gain espéré maximal, égal à la valeur du jeu.
 
 
 %------------------------------------------------------
 
+
 \section{Ex2 Jeu de Domino}
-Le joueur X choisit une configuration et le joueur Y propose (simultanément) une case parmi les 6. 
 
-Si la configuration recouvre cette case Y gagne sinon X gagne. 
+Le joueur $X$ choisit une configuration de dominos parmi les $7$ possibles sur une grille $2\times 3$ (cases blanches). 
+Le joueur $Y$ choisit simultanément une case parmi les $6$ cases de la grille.
 
-C'est un jeu somme nulle (si la valeur est $> 0$, c'est un gain pour $X$ et une perte pour $Y$) docn si Jouur X gagne +1 point joeur Y perdre -1 point. Le somme de points gagnent et points de perdre est toujours pareils.
+Si la configuration choisie par $X$ recouvre la case annoncée par $Y$, alors $Y$ gagne ; sinon, c'est $X$ qui gagne.
 
+C'est un jeu à somme nulle : si la valeur est $> 0$, c'est un gain pour $X$ et une perte du même montant pour $Y$, et réciproquement. 
+On code par exemple :
+\[
+\text{gain de }X =
+\begin{cases}
++1 & \text{si $X$ gagne},\\
+-1 & \text{si $Y$ gagne}.
+\end{cases}
+\]
 
-\subsection{Modelisation}
-Il y a 7 strategies different pour X donc il y a 7 ligne.
+\subsection{Modélisation}
 
-Le premier 3 collone represante 1ier ligne de jeu.
-Le dernier 3 collone represante 2ieme ligne de jeu
+Il y a $7$ configurations différentes possibles pour $X$, donc $7$ lignes dans la matrice de jeu.
+Les $6$ colonnes correspondent aux $6$ cases que le joueur $Y$ peut annoncer (numérotées de $1$ à $6$).
 
-Les cases cohisi par le X ont une valuer 1.
+Pour chaque configuration $i$ et chaque case $j$, on définit le gain de $X$ par
+\[
+a_{ij} =
+\begin{cases}
+1 & \text{si la configuration $i$ recouvre la case $j$},\\
+-1 & \text{sinon.}
+\end{cases}
+\]
 
-
+Cela conduit à la matrice de gains suivante (pour le joueur $X$) :
 \[
 A =
 \begin{pmatrix}
@@ -205,32 +378,112 @@ A =
 -1 & -1 &  1 &  1 &  1 &  1 \\
  1 &  1 &  1 &  1 & -1 & -1 \\
  1 &  1 &  1 & -1 & -1 &  1
-\end{pmatrix}
+\end{pmatrix}.
 \]
+
 
 \subsection{Stratégie pure}
 
-On calcule d'abord les bornes classiques :
+On calcule d’abord les bornes classiques :
 \[
-V^- = \max_i \min_j a_{ij}, 
-\qquad 
+V^- = \max_i \min_j a_{ij},
+\qquad
 V^+ = \min_j \max_i a_{ij}.
 \]
 
-Comme tous les minima des lignes valent $-1$, on obtient :
+Pour chaque ligne du joueur \(X\), on remarque que la configuration choisie ne
+recouvre pas au moins une case proposée par \(Y\), ce qui donne toujours une
+issue défavorable de \(-1\). Ainsi :
 \[
-V^- = \max(-1,-1,-1,-1,-1,-1) = -1.
+\min_j a_{ij} = -1 \qquad \text{pour chaque } i=1,\ldots,7.
+\]
+D’où :
+\[
+V^- = \max(-1,-1,-1,-1,-1,-1,-1) = -1.
 \]
 
-Comme tous les maxima des colonnes valent $1$, on obtient :
+De même, pour chaque colonne \(j\), il existe toujours au moins une configuration
+de \(X\) qui recouvre cette case, ce qui donne un gain de \(+1\). Autrement dit :
+\[
+\max_i a_{ij} = 1 \qquad \text{pour chaque } j=1,\ldots,6.
+\]
+On en déduit :
 \[
 V^+ = \min(1,1,1,1,1,1) = 1.
 \]
 
-Ainsi,
+On a donc :
 \[
-V^- \neq V^+ \qquad \Longrightarrow \qquad 
-\text{pas de point selle et pas de solution en stratégies pures.}
+V^- \neq V^+ \qquad\Longrightarrow\qquad
+\text{pas de point selle et pas de solution en stratégies pures}.
 \]
+
+\subsection{Stratégies mixtes et résolution du jeu}
+
+Comme il n’existe pas de point selle en stratégies pures, on étudie le jeu en stratégies mixtes.
+
+Le joueur $X$ choisit une distribution
+\[
+X = (x_1,\ldots,x_7), \qquad x_i \ge 0,\;\; \sum_{i=1}^7 x_i = 1,
+\]
+et le joueur $Y$ choisit
+\[
+Y = (y_1,\ldots,y_6), \qquad y_j \ge 0,\;\; \sum_{j=1}^6 y_j = 1.
+\]
+
+L’espérance de gain pour $X$ est
+\[
+E(X,Y) = X A Y^{T}.
+\]
+
+Nous cherchons des stratégies mixtes optimales $X^{*}$ et $Y^{*}$ ainsi que la valeur du jeu $v$ telles que
+\[
+\max_X \min_Y E(X,Y) = \min_Y \max_X E(X,Y) = v.
+\]
+
+\subsubsection*{Résolution numérique}
+
+En résolvant les programmes linéaires correspondants (par exemple avec OPL), on obtient la valeur du jeu :
+\[
+v = 0.
+\]
+
+Autrement dit, aucun des deux joueurs ne peut garantir un gain strictement positif en jouant de manière optimale.
+
+Une solution optimale pour le joueur $X$ est :
+\[
+X^{*} =
+\left(
+0,\;
+\frac{1}{6},\;
+\frac{1}{6},\;
+\frac{1}{6},\;
+\frac{1}{6},\;
+\frac{1}{6},\;
+\frac{1}{6}
+\right).
+\]
+
+Une solution optimale pour le joueur $Y$ est :
+\[
+Y^{*} =
+\left(
+\frac{1}{6},\;
+\frac{1}{6},\;
+\frac{1}{6},\;
+\frac{1}{6},\;
+\frac{1}{6},\;
+\frac{1}{6}
+\right).
+\]
+
+\subsubsection*{Interprétation}
+
+Les deux joueurs jouent uniformément leurs stratégies disponibles (sauf la configuration 1 de $X$, qui est dominée).
+
+Comme $v = 0$, aucun joueur n’est avantagé dans ce jeu : chacun peut garantir une espérance nulle, mais pas davantage.
+
+Ainsi, les stratégies mixtes uniformes constituent des stratégies optimales pour les deux joueurs.
+
 
 \end{document}
