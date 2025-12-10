@@ -508,31 +508,38 @@ En utilisant les règles de l'énoncé :
 
 On peut alors construire les deux matrices de gains pour l’entreprise A, une pour chaque produit, en fonction des stratégies choisies par A et B (S, P12, P21).
 
-\subsubsection*{Produit 1 – Gains de A}
 
-\begin{center}
+\begin{table}[h!]
+\subsubsection*{Produit 1 – Gains de A}
+\centering
 \begin{tabular}{c|c|c|c}
 \textbf{Stratégie A \ Stratégie B} & S & P12 & P21 \\ \hline
-S & 0,08 & 0,20 & 0,30 \\
-P12 & 0,20 & -0,04 & 0,40 \\
+S   & 0,08  & 0,20  & 0,30 \\
+P12 & 0,20  & -0,04 & 0,40 \\
 P21 & -0,12 & -0,14 & -0,04
 \end{tabular}
-\end{center}
+\caption{Matrice des gains de l’entreprise A pour le Produit 1}
+\label{tab:produit1}
+\end{table}
 
+
+
+\begin{table}[h!]
 \subsubsection*{Produit 2 – Gains de A}
 
-\begin{center}
+\centering
 \begin{tabular}{c|c|c|c}
 \textbf{Stratégie A \ Stratégie B} & S & P12 & P21 \\ \hline
-S & 0,08 & 0,30 & -0,10 \\
+S   & 0,08  & 0,30  & -0,10 \\
 P12 & -0,12 & -0,04 & -0,14 \\
-P21 & 0,20 & 0,40 & -0,04
+P21 & 0,20  & 0,40  & -0,04
 \end{tabular}
-\end{center}
-En s’appuyant sur l’énoncé : 
+\caption{Matrice des gains de l’entreprise A pour le Produit 2}
+\end{table}
+ 
 
 \begin{quote}
-Pour chaque type de produit, si les deux entreprises proposent leur modèle amélioré simultanément, A augmente son offre des ventes totales futures dans ce produit de 8\% (c’est-à-dire que sa part passe de 25\% à 33\%). De la même manière, A augmente son offre de 20, 30 et 40\% du total si le produit est disponible respectivement 2, 6 et 8 mois plus tôt que B. D’autre part, A perd 4, 10, 12 et 14\% du total si B propose le produit respectivement 1, 3, 7 et 10 mois plus tôt.
+En s’appuyant sur l’énoncé : Pour chaque type de produit, si les deux entreprises proposent leur modèle amélioré simultanément, A augmente son offre des ventes totales futures dans ce produit de 8\% (c’est-à-dire que sa part passe de 25\% à 33\%). De la même manière, A augmente son offre de 20, 30 et 40\% du total si le produit est disponible respectivement 2, 6 et 8 mois plus tôt que B. D’autre part, A perd 4, 10, 12 et 14\% du total si B propose le produit respectivement 1, 3, 7 et 10 mois plus tôt.
 \end{quote}
 
 On a donc deux entreprises, A et B, qui se partagent le marché.
@@ -548,6 +555,58 @@ S & 0,08 $\cdot$ Q$_1$ + 0,08 $\cdot$ Q$_2$ & -0,10 $\cdot$ Q$_1$ + 0,30 $\cdot$
 21  & -0,12 $\cdot$ Q$_1$ + 0,20 $\cdot$ Q$_2$ & -0,14 $\cdot$ Q$_1$ + 0,40 $\cdot$ Q$_2$ & -0,04 $\cdot$ (Q$_1$ + Q$_2$)
 \end{tabular}
 \end{center}
+\subsection*{d) Existence d’un point selle}
+
+Pour savoir si une stratégie stable existe pour A et B, on cherche un \textbf{point selle}.  
+Un point selle correspond à une situation où aucun joueur ne peut améliorer son gain en changeant de stratégie, tant que l’autre reste sur la sienne.
+
+\subsubsection*{Cas 1 : \(Q_1 = Q_2 = x\)}
+
+Si les deux produits ont la même quantité, on remplace \(Q_1\) et \(Q_2\) par \(x\) dans la matrice des gains de l’entreprise A :
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c|c}
+\textbf{Stratégie A \ Stratégie B} & S & 12 & 21 \\ \hline
+S  & 0,16x  & 0,20x  & 0,20x \\
+12 & 0,08x  & -0,08x & 0,26x \\
+21 & 0,08x  & 0,26x  & -0,08x
+\end{tabular}
+\caption{Matrice des gains de l’entreprise A pour \(Q_1 = Q_2 = x\)}
+\end{table}
+
+Les bornes du jeu sont :  
+\[
+V^+ = \min_j \max_i a_{ij} = 0,16x, \quad
+V^- = \max_i \min_j a_{ij} = 0,16x
+\]
+
+Comme \(V^+ = V^-\), il existe un \textbf{point selle}.  
+La stratégie stable est que \textbf{les deux entreprises choisissent S (simultané)}.
+
+\subsubsection*{Cas 2 : \(Q_1 = Q_2 / 2 = x\)}
+
+Si le produit 1 représente la moitié du produit 2, on remplace \(Q_1 = x\) et \(Q_2 = 2x\). La matrice devient :
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{c|c|c|c}
+\textbf{Stratégie A \ Stratégie B} & S & 12 & 21 \\ \hline
+S  & 0,12x  & 0,05x  & 0,25x \\
+12 & 0,14x  & -0,06x & 0,33x \\
+21 & -0,02x & 0,06x  & -0,06x
+\end{tabular}
+\caption{Matrice des gains de l’entreprise A pour \(Q_1 = Q_2/2 = x\)}
+\end{table}
+
+Calcul des bornes :  
+\[
+V^+ = \min_j \max_i a_{ij} = 0,06x, \quad
+V^- = \max_i \min_j a_{ij} = 0,05x
+\]
+
+Ici \(V^+ \neq V^-\), donc \textbf{il n’existe pas de point selle}.  
+Aucune stratégie pure n’est stable dans ce cas.
 
 
 \end{document}
