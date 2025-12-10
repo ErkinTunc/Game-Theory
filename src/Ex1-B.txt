@@ -8,30 +8,28 @@
 // Matrice de jeux (6x6) 
 
 int N = 6;      // 6 stratégies pures pour A et B
-range I = 1..N; // indices des stratégies de A
+range I = 1..N; // indices des stratégies 
 
 dvar float+ y[I];  // probabilités y[i] >= 0
 
 // Fonction objectif pour le joueur B : minimiser le gain garanti
 dvar float h; // valeur garantie (peut être négative)
 
-
 // Fonction objective : minimiser le gain garanti
-maximize h;
+minimize h;
 
 // Fonction objective for le joueur B
 subject to {
-    // 6 contraintes de type : g <= somme des gains contre chaque stratégie pure de B
+    // 6 contraintes de type : h >= somme des gains contre chaque stratégie pure de B
 
-    d1: h - (   0*y[1] +   0*y[2] +   0*y[3] + 120*y[4] - 120*y[5] +   0*y[6]) <= 0;
-    d2: h - (   0*y[1] +   0*y[2] + 120*y[3] +   0*y[4] +   0*y[5] - 120*y[6]) <= 0;
-    d3: h - (   0*y[1] - 120*y[2] +   0*y[3] +   0*y[4] +   0*y[5] + 120*y[6]) <= 0;
-    d4: h - (-120*y[1] +   0*y[2] +   0*y[3] +   0*y[4] + 120*y[5] +   0*y[6]) <= 0;
-    d5: h - ( 120*y[1] +   0*y[2] +   0*y[3] - 120*y[4] +   0*y[5] +   0*y[6]) <= 0;
-    d6: h - (   0*y[1] + 120*y[2] - 120*y[3] +   0*y[4] +   0*y[5] +   0*y[6]) <= 0;
-    
-    // Somme des probabilités
-    d7: sum(i in I) y[i] == 1;
+    d1:  (   0*y[1] +   0*y[2] +   0*y[3] + 120*y[4] - 120*y[5] +   0*y[6]) - h <= 0;
+    d2:  (   0*y[1] +   0*y[2] + 120*y[3] +   0*y[4] +   0*y[5] - 120*y[6]) - h <= 0;
+    d3:  (   0*y[1] - 120*y[2] +   0*y[3] +   0*y[4] +   0*y[5] + 120*y[6]) - h <= 0;
+    d4:  (-120*y[1] +   0*y[2] +   0*y[3] +   0*y[4] + 120*y[5] +   0*y[6]) - h <= 0;
+    d5:  ( 120*y[1] +   0*y[2] +   0*y[3] - 120*y[4] +   0*y[5] +   0*y[6]) - h <= 0;
+    d6:  (   0*y[1] + 120*y[2] - 120*y[3] +   0*y[4] +   0*y[5] +   0*y[6]) - h <= 0;
+
+    d7:  sum(i in I) y[i] == 1;
 }
 
 

@@ -21,7 +21,7 @@ maximize g;
 
 // Fonction objective 
 subject to {
-    // 6 contraintes de type : g <= somme des gains contre chaque stratégie pure de B
+    // 6 contraintes de type : g <= somme des gains contre chaque stratégie pure de A
 
     c1: g - (   0*x[1] +   0*x[2] +   0*x[3] - 120*x[4] + 120*x[5] +   0*x[6]) <= 0;
     c2: g - (   0*x[1] +   0*x[2] - 120*x[3] +   0*x[4] +   0*x[5] + 120*x[6]) <= 0;
