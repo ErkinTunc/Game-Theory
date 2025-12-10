@@ -445,7 +445,7 @@ Nous cherchons des stratégies mixtes optimales $X^{*}$ et $Y^{*}$ ainsi que la 
 
 En résolvant les programmes linéaires correspondants (par exemple avec OPL), on obtient la valeur du jeu :
 \[
-v = 0.
+v = 0.333333333
 \]
 
 Autrement dit, aucun des deux joueurs ne peut garantir un gain strictement positif en jouant de manière optimale.
@@ -455,12 +455,11 @@ Une solution optimale pour le joueur $X$ est :
 X^{*} =
 \left(
 0,\;
-\frac{1}{6},\;
-\frac{1}{6},\;
-\frac{1}{6},\;
-\frac{1}{6},\;
-\frac{1}{6},\;
-\frac{1}{6}
+\frac{1}{3},\;
+0,\;
+\frac{1}{3},\;
+0,\;
+\frac{1}{3}
 \right).
 \]
 
@@ -468,22 +467,65 @@ Une solution optimale pour le joueur $Y$ est :
 \[
 Y^{*} =
 \left(
-\frac{1}{6},\;
-\frac{1}{6},\;
-\frac{1}{6},\;
-\frac{1}{6},\;
-\frac{1}{6},\;
-\frac{1}{6}
+0,\;
+\frac{1}{3},\;
+0,\;
+\frac{1}{3},\;
+0,\;
+\frac{1}{3}
 \right).
+\]
+
+La résolution (par exemple via OPL) donne :
+\[
+g^{*} = 0.333333333 ,
+\qquad
+x_2^{*} = x_4^{*} = x_6^{*} = \frac{1}{3},
+\qquad
+x_1^{*} = x_3^{*} = x_5^{*} = 0.
 \]
 
 \subsubsection*{Interprétation}
 
-Les deux joueurs jouent uniformément leurs stratégies disponibles (sauf la configuration 1 de $X$, qui est dominée).
+Les deux joueurs n’utilisent pas toutes leurs stratégies de manière uniforme.  
+Chacun joue uniquement les stratégies du support optimal
+\(\{2,4,6\}\) avec probabilité \(1/3\) chacune.
 
-Comme $v = 0$, aucun joueur n’est avantagé dans ce jeu : chacun peut garantir une espérance nulle, mais pas davantage.
+La résolution numérique donne la valeur du jeu :
+\[
+v = \frac{1}{3}.
+\]
 
-Ainsi, les stratégies mixtes uniformes constituent des stratégies optimales pour les deux joueurs.
+Comme \(v > 0\), le jeu avantage le joueur \(X\) : il peut garantir une espérance
+de gain de \(1/3\) contre toute stratégie du joueur \(Y\), tandis que \(Y\) ne peut
+pas réduire cette espérance en dessous de \(1/3\).
+
+Les stratégies mixtes optimales sont :
+\[
+X^{*} =
+\left(
+0,\;
+\frac{1}{3},\;
+0,\;
+\frac{1}{3},\;
+0,\;
+\frac{1}{3}
+\right),
+\qquad
+Y^{*} =
+\left(
+0,\;
+\frac{1}{3},\;
+0,\;
+\frac{1}{3},\;
+0,\;
+\frac{1}{3}
+\right).
+\]
+
+Ces stratégies constituent un point selle en stratégies mixtes, et la valeur du jeu
+est \(v = \frac{1}{3}\).
+
 
 \section*{Exercice 3}
 
