@@ -1,0 +1,51 @@
+// OPL 22.1.1.0 Model
+// Author lmamroune, BOYA
+// Creation Date 5 déc. 2025 at 165011
+
+// 2 joueurs, Jeux à somme nulle
+// Stategies : jouer les 3 couleurs rouge,blanc,bleue
+
+// Matrice de jeux (6x6) 
+
+int N = 6;      // 6 stratégies pures pour A et B
+range I = 1..N; // indices des stratégies de A
+
+dvar float+ y[I];  // probabilités y[i] >= 0
+
+// Fonction objectif pour le joueur B : minimiser le gain garanti
+dvar float h; // valeur garantie (peut être négative)
+
+
+// Fonction objective : minimiser le gain garanti
+maximize h;
+
+// Fonction objective for le joueur B
+subject to {
+    // 6 contraintes de type : g <= somme des gains contre chaque stratégie pure de B
+
+    d1: h - (   0*y[1] +   0*y[2] +   0*y[3] + 120*y[4] - 120*y[5] +   0*y[6]) <= 0;
+    d2: h - (   0*y[1] +   0*y[2] + 120*y[3] +   0*y[4] +   0*y[5] - 120*y[6]) <= 0;
+    d3: h - (   0*y[1] - 120*y[2] +   0*y[3] +   0*y[4] +   0*y[5] + 120*y[6]) <= 0;
+    d4: h - (-120*y[1] +   0*y[2] +   0*y[3] +   0*y[4] + 120*y[5] +   0*y[6]) <= 0;
+    d5: h - ( 120*y[1] +   0*y[2] +   0*y[3] - 120*y[4] +   0*y[5] +   0*y[6]) <= 0;
+    d6: h - (   0*y[1] + 120*y[2] - 120*y[3] +   0*y[4] +   0*y[5] +   0*y[6]) <= 0;
+    
+    // Somme des probabilités
+    d7: sum(i in I) y[i] == 1;
+}
+
+
+// Il n'ya pas de point selle V- != V+
+
+execute // Affichage de la solution
+{
+  writeln("\nValeur optimale pour B :", h) ;
+  writeln("\nSolution : ");
+  for (var i in I)
+  {
+    if (Opl.abs(y[i]) >= 0.000001) // On affiche les variables non nulles.
+    {
+      writeln("y[",i,"]=",y[i]);
+    }
+  }
+}

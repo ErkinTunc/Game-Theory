@@ -6,10 +6,10 @@
 
  // c'est un jeu somme nulle donc soit X soit Y'
  
-int N = 7; // Matrice avec 7 lignes  
+int N = 7; // Matrice avec 7 lignes (7 stratégies pures pour A)  
 range I = 1..N; // 6 colonnes 
 
-// Matrice de jeux (6*6)  
+// Matrice de jeux (7*6)  
 
 
 dvar float+ x[I]; // Variables reelles non negatives
@@ -32,6 +32,7 @@ c4: g - ( 1*x[1] - 1*x[2] - 1*x[3] + 1*x[4] + 1*x[5] + 1*x[6]) <= 0;
 c5: g - (-1*x[1] - 1*x[2] + 1*x[3] + 1*x[4] + 1*x[5] + 1*x[6]) <= 0;
 c6: g - ( 1*x[1] + 1*x[2] + 1*x[3] + 1*x[4] - 1*x[5] - 1*x[6]) <= 0;
 c7: g - ( 1*x[1] + 1*x[2] + 1*x[3] - 1*x[4] - 1*x[5] + 1*x[6]) <= 0;
+
 c8:sum(i in I) x[i] == 1;
 
 }
