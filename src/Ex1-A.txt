@@ -2,10 +2,6 @@
 // Author lmamroune, BOYA
 // Creation Date 5 déc. 2025 at 165011
 
-// 2 joueurs, Jeux à somme nulle
-// Stategies : jouer les 3 couleurs rouge,blanc,bleue
-
-// Matrice de jeux (6x6) 
 
 int N = 6;      // 6 stratégies pures pour A
 range I = 1..N; // indices des stratégies de A
@@ -13,11 +9,9 @@ range I = 1..N; // indices des stratégies de A
 dvar float+ x[I];  // probabilités x[i] >= 0
 
 // Fonction objectif pour le joueur A : maximiser le gain garanti
+
 dvar float g; // valeur garantie (peut être négative)
-
-// Fonction objectif : maximiser le gain garanti
-maximize g;  
-
+maximize g;  // Fonction objectif : maximiser le gain garanti
 
 // Fonction objective 
 subject to {

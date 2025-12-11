@@ -4,41 +4,35 @@
  * Creation Date: 8 déc. 2025 at 08:02:41
  *********************************************/
 
- // c'est un jeu somme nulle donc soit X soit Y'
- 
+// 7 stratégies pures pour X (configurations de dominos)
 int N = 7; // Matrice avec 7 lignes (7 stratégies pures pour A)  
 range I = 1..N; // 6 colonnes 
 
-// Matrice de jeux (7*6)  
-
 
 dvar float+ x[I]; // Variables reelles non negatives
-dvar float+ y[I]; // Variables reelles non negatives
 
-dvar float g;
-
-// Une variable reel sans restriction de signe
-maximize g; // maximizer le gain 
+dvar float g; // valeur garantie (peut être négative)
+maximize g; // maximizer le gain // Une variable reel sans restriction de signe
 
 // Fonction objective
-subject to
-// 7 Contraintes
-
+subject to// 7 Contraintes
 {
-c1: g - (-1*x[1] + 1*x[2] + 1*x[3] - 1*x[4] + 1*x[5] + 1*x[6]) <= 0;
-c2: g - ( 1*x[1] + 1*x[2] - 1*x[3] + 1*x[4] + 1*x[5] - 1*x[6]) <= 0;
-c3: g - ( 1*x[1] - 1*x[2] + 1*x[3] + 1*x[4] + 1*x[5] + 1*x[6]) <= 0;
-c4: g - ( 1*x[1] - 1*x[2] - 1*x[3] + 1*x[4] + 1*x[5] + 1*x[6]) <= 0;
-c5: g - (-1*x[1] - 1*x[2] + 1*x[3] + 1*x[4] + 1*x[5] + 1*x[6]) <= 0;
-c6: g - ( 1*x[1] + 1*x[2] + 1*x[3] + 1*x[4] - 1*x[5] - 1*x[6]) <= 0;
-c7: g - ( 1*x[1] + 1*x[2] + 1*x[3] - 1*x[4] - 1*x[5] + 1*x[6]) <= 0;
+  // column 1
+  c1: g - (-1*x[1] + 1*x[2] + 1*x[3] + 1*x[4] - 1*x[5] + 1*x[6] + 1*x[7]) <= 0;
+  // column 2  
+  c2: g - ( 1*x[1] + 1*x[2] - 1*x[3] - 1*x[4] - 1*x[5] + 1*x[6] + 1*x[7]) <= 0;
+  // column 3
+  c3: g - ( 1*x[1] - 1*x[2] + 1*x[3] - 1*x[4] + 1*x[5] + 1*x[6] + 1*x[7]) <= 0;
+  // column 4
+  c4: g - (-1*x[1] + 1*x[2] + 1*x[3] + 1*x[4] + 1*x[5] + 1*x[6] - 1*x[7]) <= 0;
+  // column 5
+  c5: g - ( 1*x[1] + 1*x[2] - 1*x[3] + 1*x[4] + 1*x[5] - 1*x[6] - 1*x[7]) <= 0;
+  // column 6
+  c6: g - ( 1*x[1] - 1*x[2] + 1*x[3] + 1*x[4] + 1*x[5] - 1*x[6] + 1*x[7]) <= 0;
 
-c8:sum(i in I) x[i] == 1;
-
+  // Somme des probabilités
+  c7: sum(i in I) x[i] == 1;
 }
-
-
-// Il n'ya pas de point selle V- != V+
 
 execute
 // Affichage de la solution
