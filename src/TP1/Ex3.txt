@@ -1,7 +1,7 @@
 /*********************************************
- * OPL 22.1.1.0 Model
- * Author: etboya
- * Creation Date: 11 déc. 2025 at 23:56:14
+ * OPL 12.9.0.0 Model
+ *Les etudiants: HAFSOUNI RAED, BOYA Erkin
+ * 
  *********************************************/
 
 //  EXERCICE 3 - Jeu à deux entreprises sur deux produits
