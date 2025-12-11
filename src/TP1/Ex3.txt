@@ -1,0 +1,65 @@
+/*********************************************
+ * OPL 22.1.1.0 Model
+ * Author: etboya
+ * Creation Date: 11 déc. 2025 at 23:56:14
+ *********************************************/
+
+//  EXERCICE 3 - Jeu à deux entreprises sur deux produits
+//  Résolution du joueur A (maximiseur)
+//  Taille du jeu : 3 stratégies pures (S, 12, 21)
+//  Deux produits : Q1, Q2 avec matrices G1, G2
+
+
+int N = 3;
+range I = 1..N;
+range J = 1..N;
+
+// Paramètres du jeu
+float Q1 = ...;     // défini dans le .dat
+float Q2 = ...;
+
+// Matrices de gains pour A
+float G1[I][J] = [
+  [ 0.08,  0.20,  0.30 ],   // A joue S
+  [ 0.20, -0.04,  0.40 ],   // A joue 12
+  [-0.12, -0.14, -0.04 ]    // A joue 21
+];
+
+float G2[I][J] = [
+  [ 0.08,  0.30, -0.10 ],   // A joue S
+  [-0.12, -0.04, -0.14 ],   // A joue 12
+  [ 0.20,  0.40, -0.04 ]    // A joue 21
+];
+
+// Matrice globale G = Q1*G1 + Q2*G2
+float G[i in I][j in J] =
+   Q1 * G1[i][j] + Q2 * G2[i][j];
+
+// Variables : stratégie mixte du joueur A
+dvar float+ x[I];
+dvar float g;
+
+// Objectif
+maximize g;
+
+// Contraintes
+subject to {
+  forall(j in J)
+    g <= sum(i in I) G[i][j] * x[i];
+
+  sum(i in I) x[i] == 1;
+}
+
+// ------ AFFICHAGE DES RESULTATS ------
+execute {
+  writeln("// -------------------------------------------------------");
+  writeln("// Exercice 3 - Résultat pour A");
+  writeln("// Q1 = ", Q1, "   Q2 = ", Q2);
+  writeln("// Valeur optimale (gain garanti) : ", g);
+  writeln("// Stratégie optimale x : ");
+
+  for (var i in I)
+    writeln("   x[", i, "] = ", x[i]);
+
+  writeln("// -------------------------------------------------------");
+}
