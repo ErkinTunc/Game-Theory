@@ -171,6 +171,49 @@ avec des gains \((3,2)\).
 L’équilibre \((\text{Refuser},\,\text{Ne pas entrer})\) est un équilibre de Nash en forme normale,
 mais il n’est pas parfait en sous-jeux car la menace de refus n’est pas crédible.
 
+%-----------------------------------------------------------
+\section*{Exercice 3}
+
+\paragraph{1. Probabilité de gain du joueur I.}
+Pour chaque choix initial du joueur~I, le joueur~II choisit rationnellement la roue
+restante qui minimise la probabilité de gain du joueur~I.
+
+\begin{itemize}
+  \item Si le joueur~I choisit la roue~1, sa probabilité de gain est \(\frac{4}{9}\).
+  \item S’il choisit la roue~2, sa probabilité de gain est également \(\frac{4}{9}\).
+  \item S’il choisit la roue~3, sa probabilité de gain est \(\frac{1}{3}\).
+\end{itemize}
+
+Ainsi, face à un adversaire rationnel, le joueur~I maximise sa probabilité de gain
+en choisissant la roue~1 ou la roue~2.
+
+\paragraph{2. Forme extensive.}
+Le jeu est séquentiel et à information parfaite.
+Le joueur~I choisit d’abord une roue parmi \(R1, R2, R3\).
+Après observation de ce choix, le joueur~II choisit l’une des deux roues restantes.
+Les gains aux feuilles de l’arbre correspondent aux espérances de gain calculées à la
+question~1.
+
+\paragraph{3. Forme normale.}
+La forme normale est obtenue à partir de la forme extensive à l’aide de Gambit.
+Le joueur~I dispose de trois stratégies pures :
+\[
+S_1 = \{R1, R2, R3\}.
+\]
+Une stratégie du joueur~II est un plan complet indiquant la roue choisie après chaque
+choix possible du joueur~I, ce qui conduit à \(2^3 = 8\) stratégies pures.
+
+\paragraph{4. Équilibres de Nash.}
+À l’aide de Gambit, on obtient des équilibres de Nash en stratégies pures.
+Dans ces équilibres, le joueur~II choisit, pour chaque roue du joueur~I, la roue
+restante qui minimise son espérance de gain.
+
+Le joueur~I joue alors indifféremment la roue~1 ou la roue~2, chacune conduisant à un
+gain espéré de \(-\frac{1}{9}\).
+La roue~3 n’apparaît dans aucun équilibre de Nash car elle conduit à un gain espéré
+strictement plus faible.
+
+Ces équilibres sont également des équilibres parfaits en sous-jeux.
 
 
 
