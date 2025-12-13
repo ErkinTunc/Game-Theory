@@ -1,7 +1,7 @@
 /*********************************************
- * OPL 22.1.1.0 Model
- * Author: etboya
- * Creation Date: 11 déc. 2025 at 23:56:14
+ * OPL 12.9.0.0 Model
+ *Les etudiants: HAFSOUNI RAED, BOYA Erkin
+ * 
  *********************************************/
 
 //  EXERCICE 3 - Jeu à deux entreprises sur deux produits
@@ -10,56 +10,57 @@
 //  Deux produits : Q1, Q2 avec matrices G1, G2
 
 
+// MAtrice du jeu (3*3)
 int N = 3;
 range I = 1..N;
-range J = 1..N;
 
-// Paramètres du jeu
-float Q1 = ...;     // défini dans le .dat
-float Q2 = ...;
 
-// Matrices de gains pour A
-float G1[I][J] = [
-  [ 0.08,  0.20,  0.30 ],   // A joue S
-  [ 0.20, -0.04,  0.40 ],   // A joue 12
-  [-0.12, -0.14, -0.04 ]    // A joue 21
+
+// Merci de choisir un cas où Q1=Q/2 car l'exemple au dessous traite le cas où Q1=Q2
+float Q1 = 90;   // Quantité du 1ere produit
+float Q2 = 90;   // Quantité du 2eme produit
+
+
+dvar float+ x[I]; // Probabilités de A
+dvar float+ y[I]; // Probabilités du B
+dvar float v;     // Valeur du jeu.
+
+
+float M[I][I] = [
+   [ 0.08*Q1 + 0.08*Q2 ,  -0.10*Q1 + 0.30*Q2 ,  0.30*Q1 - 0.10*Q2 ],
+   [ 0.20*Q1 - 0.12*Q2 ,  -0.04*(Q1+Q2)      ,  0.40*Q1 - 0.14*Q2 ],
+   [ -0.12*Q1 + 0.20*Q2 , -0.14*Q1 + 0.40*Q2 , -0.04*(Q1+Q2)      ]
 ];
 
-float G2[I][J] = [
-  [ 0.08,  0.30, -0.10 ],   // A joue S
-  [-0.12, -0.04, -0.14 ],   // A joue 12
-  [ 0.20,  0.40, -0.04 ]    // A joue 21
-];
+// Fonction objectif:maximiser le gain garanti
+maximize v;
 
-// Matrice globale G = Q1*G1 + Q2*G2
-float G[i in I][j in J] =
-   (Q1 * G1[i][j]) + (Q2 * G2[i][j]);
-
-// Variables : stratégie mixte du joueur A
-dvar float+ x[I];
-dvar float g;
-
-// Objectif
-maximize g;
-
-// Contraintes
 subject to {
-  forall(j in J)
-    g <= sum(i in I) G[i][j] * x[i];
+  //Gain minimum assuré pour A,quel que soit la stratégie de B
+  c1: v - (M[1][1]*x[1] + M[2][1]*x[2] + M[3][1]*x[3]) <= 0;
+  c2: v - (M[1][2]*x[1] + M[2][2]*x[2] + M[3][2]*x[3]) <= 0;
+  c3: v - (M[1][3]*x[1] + M[2][3]*x[2] + M[3][3]*x[3]) <= 0;
 
-  sum(i in I) x[i] == 1;
+  //Somme des probabilités du A
+  c4: x[1] + x[2] + x[3] == 1;
+
+  // Somme des probabilités du B
+  c5: y[1] + y[2] + y[3] == 1;
 }
 
-// ------ AFFICHAGE DES RESULTATS ------
+// Affichage des solution
 execute {
-  writeln("// -------------------------------------------------------");
-  writeln("// Exercice 3 - Résultat pour A");
-  writeln("// Q1 = ", Q1, "   Q2 = ", Q2);
-  writeln("// Valeur optimale (gain garanti) : ", g);
-  writeln("// Stratégie optimale x : ");
+ 
+  writeln("\nValeur optimale du jeu :", v);
 
-  for (var i in I)
-    writeln("   x[", i, "] = ", x[i]);
+  writeln("\nStratégie optimale de A:");
+  for(var i=1; i<=3; i++)
+    if (Opl.abs(x[i]) > 0.000001)
+      writeln(" x[", i, "] = ", x[i]);
 
-  writeln("// -------------------------------------------------------");
+  writeln("\nStratégie optimale de B:");
+  for(var i=1; i<=3; i++)
+    if (Opl.abs(y[i]) > 0.000001)
+      writeln(" y[", i, "] = ", y[i]);
 }
+ 
