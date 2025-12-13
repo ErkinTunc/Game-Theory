@@ -37,13 +37,13 @@ subject to// 7 Contraintes
 execute
 // Affichage de la solution
 {
-writeln("\nValeur optimale :", g) ;
-writeln("\nSolution : ");
-for (var i in I)
-{
-if (Opl.abs(x[i]) >= 0.000001) // On affiche les variables non nulles.
-{
-writeln("x[",i,"]=",x[i]);
-}
-}
+  writeln("\nValeur optimale :", g) ;
+  writeln("\nSolution : ");
+  for (var i in I)
+    {
+      if (Opl.abs(x[i]) >= 0.000001) // On affiche les variables non nulles.
+    {
+      writeln("x[",i,"]=",x[i]);
+    }
+  }
 }

@@ -1,0 +1,180 @@
+\documentclass[a4paper,11pt]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% Page layout
+\geometry{a4paper, margin=2.5cm}
+
+% Fix header height issue
+\setlength{\headheight}{14pt}
+
+% Header and footer setup
+\pagestyle{fancy}
+\fancyhf{} % Clear all header and footer fields
+
+% Header
+\fancyhead[R]{ISIMA - Théorie Des Jeux} % Right header
+
+% Footer - with left, center, and right elements
+\fancyfoot[L]{BOYA, HAFSOUNI} % Left footer
+\fancyfoot[C]{Université de Clermont Auvergne} % Center footer
+\fancyfoot[R]{\thepage} % Right footer
+
+% Optional header/footer lines
+\renewcommand{\headrulewidth}{0.4pt} % Header line (set to 0pt to remove)
+\renewcommand{\footrulewidth}{0.4pt} % Footer line (set to 0pt to remove)
+
+\begin{document}
+
+\begin{center}
+\Huge{ISIMA - Théorie Des Jeux}\\[0.5cm]
+\LARGE{TP2 de Théorie Des Jeux}\\[0.2cm]
+\Large{Decembre 2025}\\[0.1cm]
+\Large{Erkin Tunc BOYA , Raed HAFSOUNI}
+\end{center}
+
+%-------------------------------------------------------------
+
+\section*{Exercice 1 -- Équilibres de Nash en stratégies pures}
+
+On considère deux joueurs et deux matrices de gains $A$ et $B$, où :
+\begin{itemize}
+  \item $A[i][j]$ représente le gain du joueur~I,
+  \item $B[i][j]$ représente le gain du joueur~II,
+\end{itemize}
+lorsque le joueur~I joue la stratégie $i$ et le joueur~II joue la stratégie $j$.
+
+\paragraph{Méthode de résolution (meilleure réponse).}
+Un couple de stratégies $(i,j)$ est un équilibre de Nash en stratégies pures si :
+\[
+i \in \arg\max_{i'} A[i'][j]
+\quad \text{et} \quad
+j \in \arg\max_{j'} B[i][j'].
+\]
+Autrement dit, aucun joueur n’a intérêt à dévier unilatéralement de sa stratégie.
+
+La méthode utilisée consiste à :
+\begin{enumerate}
+  \item déterminer, pour chaque stratégie de l’adversaire, l’ensemble des meilleures réponses,
+  \item identifier les couples de stratégies qui sont simultanément des meilleures réponses pour les deux joueurs.
+\end{enumerate}
+
+\paragraph{Résultats de TD3 .}
+
+\begin{itemize}
+  \item \textbf{Exercice 1 :}  
+  l’algorithme met en évidence deux équilibres de Nash en stratégies pures :
+  \[
+  (0,0) \quad \text{et} \quad (1,1).
+  \]
+
+  \item \textbf{Exercice 2 :}  
+  l’algorithme met en évidence deux équilibres de Nash en stratégies pures :
+  \[
+  (0,1) \quad \text{et} \quad (1,0).
+  \]
+\end{itemize}
+
+\paragraph{Remarque.}
+Les indices sont donnés en base 0, conformément à la convention informatique utilisée.
+Pour une écriture mathématique standard, il suffit d’ajouter $1$ à chaque indice.
+
+
+
+%---------------------------------------------------------
+
+\section*{Exercice 2}
+
+\subsection{Jeu Gauche -- Droite -- Haut -- Bas}
+
+On considère un jeu à deux joueurs étudié sous forme extensive et sous forme normale.
+
+\paragraph{Forme extensive.}
+Le joueur~1 joue en premier et choisit entre \textbf{Haut (H)} et \textbf{Bas (B)}.
+Le joueur~2 observe ce choix et décide ensuite entre \textbf{Gauche (G)} et \textbf{Droite (D)}.
+Les gains associés aux issues sont donnés par l’arbre du jeu.
+
+\paragraph{Forme normale.}
+Une stratégie du joueur~2 est un plan complet indiquant son action après chaque choix possible du joueur~1.
+Ainsi :
+\[
+S_1 = \{H,B\}, \qquad
+S_2 = \{GG, GD, DG, DD\}.
+\]
+
+La matrice des gains correspondante est :
+\[
+\begin{array}{c|cccc}
+      & GG & GD & DG & DD \\
+\hline
+H & (2,1) & (2,1) & (3,-2) & (3,-2) \\
+B & (-6,2) & (-1,4) & (-6,2) & (-1,4)
+\end{array}
+\]
+
+\paragraph{Équilibres.}
+À l’aide de Gambit, on obtient plusieurs équilibres de Nash en forme normale.
+En revanche, l’unique équilibre parfait en sous-jeux est :
+\[
+(H,\,GD),
+\]
+ce qui conduit à l’issue \((H,G)\) avec gains \((2,1)\).
+
+
+\subsection{Jeu de production (entrée sur le marché)}
+
+\paragraph{Forme normale.}
+La forme normale du jeu est donnée par la matrice suivante, où le premier gain est celui de la firme~A et le second celui de la firme~B :
+\[
+\begin{array}{c|cc}
+      & \text{Entrer} & \text{Ne pas entrer} \\
+\hline
+\text{Accepter} & (3,2) & (4,0) \\
+\text{Refuser}  & (-2,-3) & (4,0)
+\end{array}
+\]
+
+
+\paragraph{Équilibres en forme normale.}
+À l’aide de Gambit, on obtient les équilibres de Nash suivants :
+\begin{itemize}
+  \item un équilibre pur : \((\text{Accepter},\,\text{Entrer})\) ;
+  \item un équilibre pur : \((\text{Refuser},\,\text{Ne pas entrer})\) ;
+  \item un équilibre mixte dans lequel la firme~A joue
+  \(\text{Accepter}\) avec la probabilité \(3/5\) et la firme~B choisit
+  \(\text{Ne pas entrer}\).
+\end{itemize}
+
+\paragraph{Forme extensive et équilibre parfait en sous-jeux.}
+Le jeu est naturellement séquentiel : la firme~B décide d’abord d’entrer ou non sur le marché.
+En cas d’entrée, la firme~A choisit entre accepter ou refuser.
+
+Par raisonnement à rebours, si la firme~B entre, la firme~A préfère accepter l’entrée
+(car \(3 > -2\)).
+Anticipant ce comportement, la firme~B choisit d’entrer.
+
+L’unique équilibre parfait en sous-jeux est donc :
+\[
+(\text{Entrer},\,\text{Accepter}),
+\]
+avec des gains \((3,2)\).
+
+L’équilibre \((\text{Refuser},\,\text{Ne pas entrer})\) est un équilibre de Nash en forme normale,
+mais il n’est pas parfait en sous-jeux car la menace de refus n’est pas crédible.
+
+
+
+
+%-----------------------------------------------------------
+
+
+\end{document}

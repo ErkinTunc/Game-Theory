@@ -33,7 +33,7 @@ float G2[I][J] = [
 
 // Matrice globale G = Q1*G1 + Q2*G2
 float G[i in I][j in J] =
-   Q1 * G1[i][j] + Q2 * G2[i][j];
+   (Q1 * G1[i][j]) + (Q2 * G2[i][j]);
 
 // Variables : stratégie mixte du joueur A
 dvar float+ x[I];
