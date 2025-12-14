@@ -341,6 +341,13 @@ gain espéré strictement positif, tandis que $Y$ ne peut faire mieux que limite
 
 \section*{Exercice 3 -- Deux produits concurrents}
 
+\subsection*{Explication du code de l'exercice 3}
+
+Dans ce code,on commence par définir les stratégies possibles pour les deux joueurs et on construit la matrice des gains $M$ selon les quantités $Q1$ et $Q2$.  
+Les variables $x[i]$ et $y[i]$ servent à représenter les probabilités que chaque joueur choisisse ses stratégies, et $v$ correspond au gain minimum que le joueur A peut s’assurer.  
+On cherche à maximiser $v$ en mettant des contraintes pour que ce gain soit garanti peu importe ce que fait le joueur B, et pour que les probabilités de chaque joueur somment à 1.  
+À la fin, le programme affiche la valeur du jeu ainsi que les probabilités des stratégies réellement utilisées par les joueurs.
+
 \subsection*{(a) Les 3 stratégies possibles pour chaque entreprise}
 
 Chaque entreprise (A et B) doit choisir comment planifier l’amélioration de ses deux produits.
