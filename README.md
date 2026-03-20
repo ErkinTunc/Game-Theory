@@ -1,7 +1,5 @@
 # Game Theory TP Repository
 
-# Game Theory TP Repository
-
 This repository contains practical coursework for **Game Theory**, covering **TP1** and **TP2**. The reports present the modeling and analysis of several game-theoretic problems, including zero-sum games, payoff matrices, saddle points, mixed strategies, Nash equilibria, and subgame perfect equilibria. The repository also includes exercise data files, a Python implementation, Gambit-related `.gbt` files, LaTeX report sources, and the final PDF reports.
 
 ## Project Structure
